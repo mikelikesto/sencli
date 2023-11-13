@@ -15,8 +15,28 @@ if match:
     search_results = eval(results_string)
 
     # Extract and display only the names of the anime
-    for result in search_results:
+    for idx, result in enumerate(search_results, start=1):
         anime_name = result[0]
-        print(anime_name)
+        print("{}. {}".format(idx, anime_name))
 else:
     print("No search results found.")
+
+NB = input("Select the number of the anime | ")
+
+# Ensure NB is a valid integer
+try:
+    NB = int(NB)
+except ValueError:
+    print("Invalid input. Please enter a valid number.")
+    exit(1)
+
+# Check if the selected number is within the valid range
+if 1 <= NB <= len(search_results):
+    selected_anime_name = search_results[NB - 1][0]
+    selected_anime_name_quoted = f'"{selected_anime_name}"' 
+else:
+    print("Invalid selection. Please enter a valid number.")
+    exit(1)
+
+# Now you can use `selected_anime_name` in your second query
+output_string_second = os.system("python -m scrapers.test all --site pahe --quality 1080p --sub_or_dub dub --path /home/server/nas1/Plexser/tv/sen -V --title " + selected_anime_name_quoted)
