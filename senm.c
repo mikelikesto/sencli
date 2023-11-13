@@ -1,14 +1,12 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-
 int main() {
     
     // Set the desired working directory
-    const char *directory_path = "/home/server/senpwai/Senpwai/src";
+    const char *directory_path = "";
 
     // Use chdir to change the working directory
     if (chdir(directory_path) != 0) {
