@@ -18,6 +18,6 @@ c_file="senfetch.c"
 # Use a simpler approach to update directory_path
 sed -i "s|const char \*directory_path = \".*\";|const char *directory_path = \"$senpath\\/src\";|g" "$c_file"
 
-gcc senfetch.c -o senm
+gcc senfetch.c -o sencli
 
 sudo mv senm /bin
