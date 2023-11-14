@@ -49,7 +49,7 @@ else:
     print("Episode count not found.")
 
 config = configparser.ConfigParser()
-config.read("/home/$USER/sencli/config.ini")
+config.read("/home/server/senpi/config.ini")
 
 site = config.get("Sen", "site")
 quality = config.get("Sen", "quality")
