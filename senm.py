@@ -2,9 +2,9 @@ import configparser
 import os
 import re
 
-IN=input("Whats the name of the anime | ")
+IN = input("What's the name of the anime | ")
 
-output_string = os.popen("python -m scrapers.test search --site pahe --V --title " + IN).read()
+output_string = os.popen("python -m scrapers.test download_size --site pahe --V --title " + IN).read()
 
 # Your output string
 # Use regular expression to extract the content between square brackets
@@ -38,5 +38,15 @@ else:
     print("Invalid selection. Please enter a valid number.")
     exit(1)
 
-# Now you can use `selected_anime_name` in your second query
-output_string_second = os.system("python -m scrapers.test all --site pahe --quality 1080p --sub_or_dub dub --path /home/server/nas1/Plexser/tv/sen -V --title " + selected_anime_name_quoted)
+output_string2 = os.popen("python -m scrapers.test metadata --site pahe --title " + selected_anime_name_quoted + " -v").read()
+
+# Use a more specific regular expression to capture the episode count
+Ep = re.search(r"Episode Count: (\d+)", output_string2)
+if Ep:
+    episode_count = Ep.group(1)
+    print("Episode Count:", episode_count)
+else:
+    print("Episode count not found.")
+
+
+output_string_second = os.system("python -m scrapers.test all --site pahe --quality 1080p --sub_or_dub dub --path /home/server/nas1/Plexser/tv/sen -v --title " + selected_anime_name_quoted + " -se 1 -ee " + episode_count )
