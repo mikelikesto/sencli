@@ -2,7 +2,7 @@
 
 # Get the current working directory
 read -p "Enter the path for the downloaded content | (This can be changed in config.ini) | " user_path
-read -p "Where is you Senpwai folder located | (This can be changed in config.ini) | " senpath
+read -p "Where is you Senpwai folder located | (Run the program again to change this) | " senpath
 read -p "Do you want dub or sub | (This can be changed in config.ini) | " sub_or_dub
 
 
@@ -20,4 +20,4 @@ sed -i "s|const char \*directory_path = \".*\";|const char *directory_path = \"$
 
 gcc senfetch.c -o sencli
 
-sudo mv senm /bin
+sudo mv sencli /bin
