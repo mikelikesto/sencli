@@ -1,7 +1,7 @@
 import configparser
 import os
 import re
-
+os.system("clear")
 IN = input("What's the name of the anime | ")
 
 output_string = os.popen("python -m scrapers.test download_size --site pahe --V --title " + IN).read()
@@ -48,5 +48,21 @@ if Ep:
 else:
     print("Episode count not found.")
 
+config = configparser.ConfigParser()
+config.read("/home/server/senpi/config.ini")
 
-output_string_second = os.system("python -m scrapers.test all --site pahe --quality 1080p --sub_or_dub dub --path /home/server/nas1/Plexser/tv/sen -v --title " + selected_anime_name_quoted + " -se 1 -ee " + episode_count )
+site = config.get("Sen", "site")
+quality = config.get("Sen", "quality")
+sub_or_dub = config.get("Sen", "sub_or_dub")
+path = config.get("Sen", "path")
+
+
+#output_string_second = os.system("python -m scrapers.test all --site " + site " --quality " + quality" --sub_or_dub " + sub_or_dub" --path " + path " -v --title " + selected_anime_name_quoted + " -se 1 -ee " + episode_count )
+output_string_second = os.system(
+    "python -m scrapers.test all --site " + site +
+    " --quality " + quality +
+    " --sub_or_dub " + sub_or_dub +
+    " --path " + path +
+    " -v --title " + selected_anime_name_quoted +
+    " -se 1 -ee " + episode_count
+)
