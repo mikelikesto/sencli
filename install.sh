@@ -18,14 +18,25 @@ sed -i "s|^sub_or_dub =.*|sub_or_dub = $sub_or_dub|" "$ini_file"
 c_file="senfetch.c"
 sed -i "s|const char \*directory_path = \".*\";|const char \*directory_path = \"$senpath\\/src\";|g" "$c_file"
 
+
+
+
 # Update the Python script with the current directory
 python_script="Senm.py"
 sed -i "s|config.read(\"\")|config.read(\"$current_directory\/config.ini\")|" "$python_script"
+
+
+
+pattern_to_replace="PLACEHOLDER"
+replacement="$current_directory/$python_script"
+sed -i "s|$pattern_to_replace|$replacement|" "$c_file"
+
 
 # Run your Python script with the current directory
 
 gcc senfetch.c -o sencli
 
 sudo mv sencli /bin
+
 
 sencli
