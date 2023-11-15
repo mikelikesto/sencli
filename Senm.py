@@ -2,7 +2,8 @@ import configparser
 import os
 import re
 os.system("clear")
-IN = input("What's the name of the anime | ")
+I = input("What's the name of the anime | ")
+IN = f'"{I}"'
 
 output_string = os.popen("python -m scrapers.test download_size --site pahe --V --title " + IN).read()
 
@@ -49,7 +50,7 @@ else:
     print("Episode count not found.")
 
 config = configparser.ConfigParser()
-config.read("")
+config.read("/home/server/senpi/config.ini")
 
 site = config.get("Sen", "site")
 quality = config.get("Sen", "quality")
