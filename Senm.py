@@ -3,13 +3,19 @@ import os
 import re
 os.system("clear")
 I = input("What's the name of the anime | ")
-IN = f'"{I}"'
+IN = f'"{I + "1"}"'
 
-output_string = os.popen("python -m scrapers.test download_size --site pahe --V --title " + IN).read()
+output_string = os.popen("python -m scrapers.test download_size --site pahe -v --title " + IN).read()
 
 # Your output string
 # Use regular expression to extract the content between square brackets
 match = re.search(r"Search results were: \[(.*?)\]", output_string, re.DOTALL)
+
+
+
+
+
+
 if match:
     results_string = match.group(1)
     # Convert the string to a list of tuples
@@ -19,8 +25,15 @@ if match:
     for idx, result in enumerate(search_results, start=1):
         anime_name = result[0]
         print("{}. {}".format(idx, anime_name))
+        
 else:
-    print("No search results found.")
+   print("No Anime with that name can be found!")
+
+
+
+
+
+
 
 NB = input("Select the number of the anime | ")
 
@@ -39,15 +52,24 @@ else:
     print("Invalid selection. Please enter a valid number.")
     exit(1)
 
-output_string2 = os.popen("python -m scrapers.test metadata --site pahe --title " + selected_anime_name_quoted + " -v").read()
+output_string2 = os.popen("python -m scrapers.test metadata download_size --site pahe --title " + selected_anime_name_quoted + " -v").read()
 
 # Use a more specific regular expression to capture the episode count
 Ep = re.search(r"Episode Count: (\d+)", output_string2)
+Dw = re.search(r"Total download size is: (\d+)", output_string2)
 if Ep:
     episode_count = Ep.group(1)
     print("Episode Count:", episode_count)
 else:
     print("Episode count not found.")
+
+if Dw:
+    download_size = Dw.group(1)
+    print("Total download size is:", download_size)
+else:
+    print("Total download size count not found.")
+
+
 
 config = configparser.ConfigParser()
 config.read("/home/server/senpi/config.ini")
