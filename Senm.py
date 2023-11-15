@@ -3,10 +3,7 @@ import os
 import re
 import subprocess
 import time
-
-
-
-
+import shlex
 
 
 os.system("clear")
@@ -68,7 +65,7 @@ else:
 
 
 print("Fetching metadata.....")
-output_string2 = os.popen("python -m scrapers.test metadata download_size --site " + site + " --title " + selected_anime_name_quoted + " -v --quality " + quality + " --sub_or_dub " + sub_or_dub + " -se 1 ").read()
+output_string2 = os.popen("python -m scrapers.test metadata --site " + site + " --title " + selected_anime_name_quoted + " -v --quality " + quality + " --sub_or_dub " + sub_or_dub + " -se 1 ").read()
 
 # Use a more specific regular expression to capture the episode count
 Ep = re.search(r"Episode Count: (\d+)", output_string2)
@@ -83,7 +80,7 @@ else:
 
 
 print("Calculating size.....")
-output_string3 = os.popen("python -m scrapers.test metadata download_size --site " + site + " --title " + selected_anime_name_quoted + " -v --quality " + quality + " --sub_or_dub " + sub_or_dub + " -se 1 -ee " + episode_count + " ").read()
+output_string3 = os.popen("python -m scrapers.test download_size --site " + site + " --title " + selected_anime_name_quoted + " -v --quality " + quality + " --sub_or_dub " + sub_or_dub + " -se 1 -ee " + episode_count + " ").read()
 
 
 
@@ -103,13 +100,17 @@ else:
 
 print("Downloading...")
 
+
+folder = os.path.join(path, selected_anime_name)
+quoted_folder = shlex.quote(folder)
+os.makedirs(folder)
 #output_string_second = os.system("python -m scrapers.test all --site " + site " --quality " + quality" --sub_or_dub " + sub_or_dub" --path " + path " -v --title " + selected_anime_name_quoted + " -se 1 -ee " + episode_count )
 cmd = [
     "python", "-m", "scrapers.test", "all",
     "--site", site,
     "--quality", quality,
     "--sub_or_dub", sub_or_dub,
-    "--path", path,
+    "--path", folder,
     "-v", "--title", selected_anime_name_quoted,
     "-se", "1", "-ee", episode_count
 ]
@@ -117,7 +118,7 @@ cmd = [
 print("fetching links, Please wait a minute, this may take long")
 process = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True)
 
-download_folder_path = '/home/server/senpi/testfolder'  # Update with the actual path
+download_folder_path = folder  # Update with the actual path
 
 # Convert the expected download size from string to integer
 expected_download_size = int(download_size) * (1024 ** 2)
