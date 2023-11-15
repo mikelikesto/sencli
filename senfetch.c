@@ -17,7 +17,7 @@ int main() {
     // Your code for the desired directory goes here
 
     char command[500];
-    strcpy(command, "python -m venv ../.venv && source ../.venv/bin/activate && python /home/server/senpi/Senm.py" );
+    strcpy(command, "python -m venv ../.venv && source ../.venv/bin/activate && python PLACEHOLDER" );
     system(command);
 
     return 0; // Return success code
